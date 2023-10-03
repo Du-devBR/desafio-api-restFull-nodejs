@@ -1,0 +1,28 @@
+{
+  "name": "desafio-api-restfull-nodejs",
+  "version": "1.0.0",
+  "description": "![GitHub repo size](https://img.shields.io/github/repo-size/Du-devBR/desafio-api-restFull-nodejs)\r ![GitHub language count](https://img.shields.io/github/languages/count/Du-devBR/desafio-api-restFull-nodejs)\r ![GitHub forks](https://img.shields.io/github/forks/Du-devBR/desafio-api-restFull-nodejs)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "tsx watch src/server.ts",
+    "knex": "node --no-warnings --loader tsx ./node_modules/knex/bin/cli.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@rocketseat/eslint-config": "^2.1.0",
+    "@types/node": "^20.8.2",
+    "eslint": "^8.50.0",
+    "tsx": "^3.13.0",
+    "typescript": "^5.2.2"
+  },
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "fastify": "^4.23.2",
+    "knex": "^2.5.1",
+    "sqlite3": "^5.1.6",
+    "zod": "^3.22.3"
+  }
+}
