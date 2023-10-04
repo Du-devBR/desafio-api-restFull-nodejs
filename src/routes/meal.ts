@@ -11,10 +11,10 @@ export async function mealRoutes(app: FastifyInstance) {
     });
     try {
       const { userId } = getIdParamsSchema.parse(req.params);
-      const meal = await knex("meal").where("userId", userId).select();
+      const meals = await knex("meal").where("userId", userId).select();
 
       return res.code(200).send({
-        meal,
+        meals,
       });
     } catch (error) {
       return res.code(401).send({
@@ -60,17 +60,23 @@ export async function mealRoutes(app: FastifyInstance) {
       userId: z.string(),
     });
 
-    const { name, description, isDiet, userId } = createUserBodySchema.parse(
-      req.body,
-    );
-    await knex("meal").insert({
-      id: crypto.randomUUID(),
-      name,
-      description,
-      isDiet,
-      userId,
-    });
+    try {
+      const { name, description, isDiet, userId } = createUserBodySchema.parse(
+        req.body,
+      );
+      await knex("meal").insert({
+        id: crypto.randomUUID(),
+        name,
+        description,
+        isDiet,
+        userId,
+      });
 
-    return res.status(201).send();
+      return res.status(201).send();
+    } catch (error) {
+      return res.code(404).send({
+        message: "error in the request, please check body ",
+      });
+    }
   });
 }
