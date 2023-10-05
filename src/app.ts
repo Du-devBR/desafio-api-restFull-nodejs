@@ -11,7 +11,7 @@ app.register(userRoutes, {
 });
 
 app.register(mealRoutes, {
-  prefix: "/user/:userId/meal",
+  prefix: "/user/:idUser/meal",
 });
 
 app.register(metricsRouter, {
