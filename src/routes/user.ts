@@ -19,14 +19,16 @@ export async function userRoutes(app: FastifyInstance) {
       email: z.string(),
     });
 
+    const id = crypto.randomUUID();
+
     const { name, lastname, email } = createUserBodySchema.parse(req.body);
     await knex("user").insert({
-      id: crypto.randomUUID(),
+      id,
       name,
       lastname,
       email,
     });
 
-    return res.status(201).send();
+    return res.status(201).send({ id });
   });
 }

@@ -54,6 +54,7 @@ export async function mealRoutes(app: FastifyInstance) {
 
   // POST MEALS
   app.post("/", async (req, res) => {
+    const id = crypto.randomUUID();
     const getIdParamsSchema = z.object({
       idUser: z.string(),
     });
@@ -69,14 +70,14 @@ export async function mealRoutes(app: FastifyInstance) {
         req.body,
       );
       await knex("meal").insert({
-        id: crypto.randomUUID(),
+        id,
         name,
         description,
         isDiet,
         userId: idUser,
       });
 
-      return res.status(201).send();
+      return res.status(201).send({ id });
     } catch (error) {
       return res.code(404).send({
         message: "error in the request, please check body ",
