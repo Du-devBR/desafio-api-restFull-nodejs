@@ -39,8 +39,7 @@
 
 ## Rotas:
 
-- `GET - /user`
-
+### Usuario
 - `POST - /user`
 ```
 {
@@ -49,6 +48,8 @@
 	"email": "johndoe@teste.com"
 }
 ```
+### Refeicoes
+
 - `POST - /user/`*idUser*`/meal`
 ```
 {
@@ -57,6 +58,23 @@
 	"isDiet": true
 }
 ```
+
+- `GET - /user/`*idUser*`/meal`
+
+- `GET by ID - /user/`*idUser*`/meal/`*idMeal*` `
+
+- `PUT - /user/`*idUser*`/meal/`*idMeal*` `
+```
+{
+	"name": "teste",
+	"description": "teste1",
+	"isDiet": true
+}
+```
+- `DELETE - /user/`*idUser*`/meal/`*idMeal*` `
+
+
+
 
 ## 💻 Como usar o projeto
 
