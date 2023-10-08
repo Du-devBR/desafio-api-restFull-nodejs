@@ -4,11 +4,11 @@
 ![GitHub language count](https://img.shields.io/github/languages/count/Du-devBR/desafio-api-restFull-nodejs)
 ![GitHub forks](https://img.shields.io/github/forks/Du-devBR/desafio-api-restFull-nodejs)
 
-> Projeto academico de uma Api com crud para importação de um arquivo CSV via streams do curso de NodeJs do Ignite [Rocketseat](http://app.ropcketseat.com.br).
+> Desafio academico  para criar uma Api para administrar  refeições no dia a dia, curso de NodeJs do Ignite [Rocketseat](http://app.ropcketseat.com.br).
 
 ## Detalhes do aplicativo
 
-- Nesse desafio desenvolveremos uma API para controle de dieta diária, a Daily Diet API.
+- Nesse desafio desenvolveremos uma API para controle de dieta diária, a Daily Diet API. O projeto possui rotas para cadastro de usuario, onde o usuario logado podera registrar, visualizar, editar, deletar e resgatar as metricas das refeições.
 
 ## 🚀 Funcionalidades
 
