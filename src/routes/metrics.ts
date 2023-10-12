@@ -27,7 +27,7 @@ export async function metricsRouter(app: FastifyInstance) {
             "COALESCE(ROUND((COUNT(*) FILTER (WHERE isDiet = true) * 100.0 / NULLIF(COUNT(*), 0)),2),0) as percentMealsWithinDiet",
           ),
         )
-        .orderBy("created_at")
+        .orderBy("createdAt")
         .first();
 
       const { totalResgitered, offDiet, withinDiet, percentMealsWithinDiet } =
@@ -35,7 +35,7 @@ export async function metricsRouter(app: FastifyInstance) {
 
       const meals = await knex("meal")
         .where("userId", userId)
-        .orderBy("created_at");
+        .orderBy("createdAt");
 
       let bestSequence = 0;
       let maxSequence = 0;

@@ -62,18 +62,19 @@ export async function mealRoutes(app: FastifyInstance) {
       name: z.string(),
       description: z.string(),
       isDiet: z.boolean(),
+      createdAt: z.string(),
     });
 
     try {
       const { idUser } = getIdParamsSchema.parse(req.params);
-      const { name, description, isDiet } = createUserBodySchema.parse(
-        req.body,
-      );
+      const { name, description, isDiet, createdAt } =
+        createUserBodySchema.parse(req.body);
       await knex("meal").insert({
         id,
         name,
         description,
         isDiet,
+        createdAt,
         userId: idUser,
       });
 
