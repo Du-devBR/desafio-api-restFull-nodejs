@@ -100,13 +100,13 @@ export async function mealRoutes(app: FastifyInstance) {
       name: z.string(),
       description: z.string(),
       isDiet: z.boolean(),
+      createdAt: z.string(),
     });
 
     try {
       const { id, idUser } = getIdParamsSchema.parse(req.params);
-      const { name, description, isDiet } = uptadeUserBodySchema.parse(
-        req.body,
-      );
+      const { name, description, isDiet, createdAt } =
+        uptadeUserBodySchema.parse(req.body);
 
       const checkUserParameter = await knex("meal")
         .where("id", id)
@@ -121,6 +121,7 @@ export async function mealRoutes(app: FastifyInstance) {
         name,
         description,
         isDiet,
+        createdAt,
       });
 
       return res.send("Uptade successful");
