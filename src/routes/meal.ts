@@ -11,7 +11,10 @@ export async function mealRoutes(app: FastifyInstance) {
     });
     try {
       const { idUser } = getIdParamsSchema.parse(req.params);
-      const meals = await knex("meal").where("userId", idUser).select();
+      const meals = await knex("meal")
+        .where("userId", idUser)
+        .select()
+        .orderBy("createdAt", "desc");
 
       return res.code(200).send({
         meals,
