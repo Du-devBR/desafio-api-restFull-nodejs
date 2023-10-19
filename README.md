@@ -8,7 +8,7 @@
 
 ## Detalhes do aplicativo
 
-- Nesse desafio desenvolveremos uma API para controle de dieta diária, a Daily Diet API. O projeto possui rotas para cadastro de usuario, onde o usuario logado podera registrar, visualizar, editar, deletar e resgatar as metricas das refeições.
+- Esta é uma api restfull para gerenciamento de refeições e controle de dieta de um usuario. É possivel o usuario se cadastrar na plataforma, registrar suas refeições, editar, deletar e ver os detalhes de cada refeição. É possivel o usuario visualizar suas métricas, com dados retornando sobre o total de refeições, as que estão dentro e fora da dieta e qual a maxima de refeições dentro da dieta.
 
 ## 🚀 Funcionalidades
 
@@ -37,11 +37,43 @@
 - [ x ] O usuário só pode visualizar, editar e apagar as refeições o qual ele criou
 
 
+## 💻 Como usar o projeto
+
+Para rodar o projeto precisará realizar os procedimentos abaixo
+
+1 clone o projeto
+
+```
+https://github.com/Du-devBR/desafio-api-restFull-nodejs.git
+```
+
+2 Terminal
+
+```
+cd .\desafio-api-restFull-nodejs
+```
+
+3 Instale as dependências necessárias com o comando
+
+```
+npm install
+```
+
+4 Rode o servidor da api
+
+```
+npm run dev
+```
+
+5 Use uma ferramenta de testes de api ou integre a um projeto frontend
+
+
 ## Rotas:
 
 ### Usuario
 - `POST - /user`
 ```
+JSON
 {
 	"name": "john",
 	"lastname": "doe",
@@ -52,9 +84,11 @@
 
 - `POST - /user/`*idUser*`/meal`
 ```
+JSON
 {
 	"name": "teste",
 	"description": "teste1",
+    "createdAt": "2023-11-24T11:00:00.000-03",
 	"isDiet": true
 }
 ```
@@ -62,6 +96,21 @@
 - `GET - /user/`*idUser*`/meal`
 
 - `GET by ID - /user/`*idUser*`/meal/`*idMeal*` `
+```
+Exemplo de response
+{
+	"meal": [
+		{
+			"id": "714d3d69-40f3-436d-9389-9a13b4a25370",
+			"name": "Comida fora da dieta",
+			"description": "teste1",
+			"createdAt": "2023-11-24T11:00:00.000-03",
+			"isDiet": 1,
+			"userId": "7a7995cd-4278-4fd3-8411-84384269b872"
+		}
+	]
+}
+```
 
 - `PUT - /user/`*idUser*`/meal/`*idMeal*` `
 ```
@@ -73,15 +122,37 @@
 ```
 - `DELETE - /user/`*idUser*`/meal/`*idMeal*` `
 
+### Metrics
 
+- `GET - /user/`*idUser*`/metrics`
+```
+Exemplo de response
+{
+	"metrics": {
+		"totalResgitered": 1,
+		"withinDiet": 1,
+		"offDiet": 0,
+		"percentMealsWithinDiet": 100,
+		"maxSequence": 1
+	}
+}
+```
 
-
-## 💻 Como usar o projeto
-
+## Tests
+Teste de integração, validando as rotas da aplicação
+```
+npm run test
+```
 
 ## 🌐 Links úteis
 
 [NodeJs](https://nodejs.org/en)
+[knexjs](https://knexjs.org/)
+[fastify](https://fastify.dev/)
+[vitest](https://vitest.dev/)
+
+
+
 
 ## Eduardo Ananias da Silva
 
