@@ -53,6 +53,7 @@ describe("User routes", () => {
           name: "Refeição teste",
           description: "Refeição feita para teste",
           isDiet: true,
+          createdAt: "2023-11-28T21:00:00.000-03",
           userId: idUser,
         });
 
@@ -65,6 +66,7 @@ describe("User routes", () => {
           name: "Refeição teste",
           description: "Refeição feita para teste",
           isDiet: true,
+          createdAt: "2023-11-28T21:00:00.000-03",
           userId: idUser,
         });
       expect(response.statusCode).toEqual(201);
@@ -84,6 +86,7 @@ describe("User routes", () => {
         .send({
           name: "Modificado refeição",
           description: "Modificado Refeição feita para teste",
+          createdAt: "2023-11-28T21:00:00.000-03",
           isDiet: true,
         });
 
@@ -112,6 +115,7 @@ describe("User routes", () => {
         name: "Refeição teste",
         description: "Refeição feita para teste",
         isDiet: true,
+        createdAt: "2023-11-28T21:00:00.000-03",
         userId: idUser,
       });
 
