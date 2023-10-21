@@ -8,6 +8,7 @@ declare module "knex/types/tables" {
       name: string;
       lastname: string;
       email: string;
+      hashPassword: string;
     };
     meal: {
       id: string;

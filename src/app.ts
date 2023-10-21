@@ -5,16 +5,15 @@ import fastifyCors from "@fastify/cors";
 import { userRoutes } from "./routes/user";
 import { mealRoutes } from "./routes/meal";
 import { metricsRouter } from "./routes/metrics";
-
+import fastifyJwt from "@fastify/jwt";
+import { env } from "./env";
 export const app = fastify();
 
 app.register(fastifyCors);
 
-// app.register(fastifyCors, {
-//   origin: "*", // Ou a origem permitida que você deseja configurar
-//   methods: ["GET", "POST", "PUT", "DELETE"],
-//   // Outras opções conforme suas necessidades...
-// });
+app.register(fastifyJwt, {
+  secret: env.JWT_SECRET,
+});
 
 app.register(cookie);
 

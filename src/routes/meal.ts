@@ -6,6 +6,7 @@ import crypto from "crypto";
 export async function mealRoutes(app: FastifyInstance) {
   // GET MEALS
   app.get("/", async (req, res) => {
+    await req.jwtVerify();
     const getIdParamsSchema = z.object({
       idUser: z.string().uuid(),
     });
@@ -28,6 +29,7 @@ export async function mealRoutes(app: FastifyInstance) {
 
   // GET MEALS:ID
   app.get("/:id", async (req, res) => {
+    await req.jwtVerify();
     const getIdParamsSchema = z.object({
       id: z.string().uuid(),
       idUser: z.string().uuid(),
@@ -57,6 +59,7 @@ export async function mealRoutes(app: FastifyInstance) {
 
   // POST MEALS
   app.post("/", async (req, res) => {
+    await req.jwtVerify();
     const id = crypto.randomUUID();
     const getIdParamsSchema = z.object({
       idUser: z.string(),
@@ -92,6 +95,7 @@ export async function mealRoutes(app: FastifyInstance) {
   // PUT MEAL
 
   app.put("/:id", async (req, res) => {
+    await req.jwtVerify();
     const getIdParamsSchema = z.object({
       id: z.string(),
       idUser: z.string(),
@@ -133,6 +137,7 @@ export async function mealRoutes(app: FastifyInstance) {
   // DELETE
 
   app.delete("/:id", async (req, res) => {
+    await req.jwtVerify();
     const getIdParamsSchema = z.object({
       id: z.string(),
       idUser: z.string(),

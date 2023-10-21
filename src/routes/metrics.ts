@@ -4,6 +4,7 @@ import { knex } from "../database";
 
 export async function metricsRouter(app: FastifyInstance) {
   app.get("/", async (req, res) => {
+    await req.jwtVerify();
     const getIdParamsSchema = z.object({
       userId: z.string().uuid(),
     });
