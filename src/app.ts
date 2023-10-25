@@ -6,7 +6,10 @@ import { userRoutes } from "./routes/user";
 import { mealRoutes } from "./routes/meal";
 import { metricsRouter } from "./routes/metrics";
 import fastifyJwt from "@fastify/jwt";
+
 import { env } from "./env";
+import { email } from "./routes/email/sendEmail";
+
 export const app = fastify();
 
 app.register(fastifyCors);
@@ -27,4 +30,8 @@ app.register(mealRoutes, {
 
 app.register(metricsRouter, {
   prefix: "/user/:userId/metrics",
+});
+
+app.register(email, {
+  prefix: "user/",
 });
