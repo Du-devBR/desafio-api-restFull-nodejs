@@ -26,7 +26,7 @@ describe("User routes", () => {
 
   describe("User authentication", () => {
     test("User can register", async () => {
-      const response = await request(app.server).post("/user/register").send({
+      const response = await request(app.server).post("/api/register").send({
         name: "New user",
         lastname: "Lastname User",
         email: "newuser@teste.com",
@@ -35,14 +35,14 @@ describe("User routes", () => {
       expect(response.statusCode).toEqual(201);
     });
     test("User can login", async () => {
-      const response = await request(app.server).post("/user/register").send({
+      const response = await request(app.server).post("/api/register").send({
         name: "New user",
         lastname: "Lastname User",
         email: "newuser@teste.com",
         password: "12345678",
       });
       const userLoginResponse = await request(app.server)
-        .post("/user/login")
+        .post("/api/login")
         .send({
           email: "newuser@teste.com",
           password: "12345678",
@@ -58,7 +58,7 @@ describe("User routes", () => {
 
     beforeEach(async () => {
       const createUserResponse = await request(app.server)
-        .post("/user/register")
+        .post("/api/register")
         .send({
           name: "New user",
           lastname: "Lastname User",
@@ -67,14 +67,14 @@ describe("User routes", () => {
         });
       idUser = createUserResponse.body.id;
 
-      const response = await request(app.server).post("/user/login").send({
+      const response = await request(app.server).post("/api/login").send({
         email: "newuser@teste.com",
         password: "12345678",
       });
       authToken = response.body.token;
 
       const createMealresponse = await request(app.server)
-        .post(`/user/${idUser}/meal`)
+        .post(`/api/user/${idUser}/meal`)
         .set("Authorization", `Bearer ${authToken}`)
         .send({
           name: "Refeição teste",
@@ -88,7 +88,7 @@ describe("User routes", () => {
     });
     test("User can register a meal", async () => {
       const response = await request(app.server)
-        .post(`/user/${idUser}/meal`)
+        .post(`/api/user/${idUser}/meal`)
         .set("Authorization", `Bearer ${authToken}`)
         .send({
           name: "Refeição teste",
@@ -101,20 +101,20 @@ describe("User routes", () => {
     });
     test("User can view yours meals", async () => {
       const response = await request(app.server)
-        .get(`/user/${idUser}/meal`)
+        .get(`/api/user/${idUser}/meal`)
         .set("Authorization", `Bearer ${authToken}`);
       expect(response.statusCode).toEqual(200);
     });
     test("User can view details of a meal by id", async () => {
       const response = await request(app.server)
-        .get(`/user/${idUser}/meal`)
+        .get(`/api/user/${idUser}/meal`)
         .set("Authorization", `Bearer ${authToken}`);
 
       expect(response.statusCode).toEqual(200);
     });
     test("User can edit a meal by id", async () => {
       const response = await request(app.server)
-        .put(`/user/${idUser}/meal/${idMeal}`)
+        .put(`/api/user/${idUser}/meal/${idMeal}`)
         .set("Authorization", `Bearer ${authToken}`)
         .send({
           name: "Modificado refeição",
@@ -128,7 +128,7 @@ describe("User routes", () => {
 
     test("User can delete a meal by id", async () => {
       const response = await request(app.server)
-        .delete(`/user/${idUser}/meal/${idMeal}`)
+        .delete(`/api/user/${idUser}/meal/${idMeal}`)
         .set("Authorization", `Bearer ${authToken}`);
       expect(response.statusCode).toEqual(200);
     });
@@ -137,7 +137,7 @@ describe("User routes", () => {
   describe("User metrics", () => {
     test("User can view your metrics", async () => {
       const createUserResponse = await request(app.server)
-        .post("/user/register")
+        .post("/api/register")
         .send({
           name: "New user",
           lastname: "Lastname User",
@@ -148,7 +148,7 @@ describe("User routes", () => {
       const idUser = createUserResponse.body.id;
 
       const userLoginResponse = await request(app.server)
-        .post("/user/login")
+        .post("/api/login")
         .send({
           email: "newuser@teste.com",
           password: "12345678",
@@ -158,7 +158,7 @@ describe("User routes", () => {
       console.log(authToken);
 
       await request(app.server)
-        .post(`/user/${idUser}/meal`)
+        .post(`/api/user/${idUser}/meal`)
         .set("Authorization", `Bearer ${authToken}`)
         .send({
           name: "Refeição teste",
@@ -169,7 +169,7 @@ describe("User routes", () => {
         });
 
       const response = await request(app.server)
-        .get(`/user/${idUser}/metrics`)
+        .get(`/api/user/${idUser}/metrics`)
         .set("Authorization", `Bearer ${authToken}`);
 
       expect(response.statusCode).toEqual(200);
