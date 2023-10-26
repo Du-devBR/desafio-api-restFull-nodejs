@@ -9,6 +9,7 @@ import fastifyJwt from "@fastify/jwt";
 
 import { env } from "./env";
 import { email } from "./routes/email/sendEmail";
+import { redefinePassword } from "./routes/email/redefinePassword";
 
 export const app = fastify();
 
@@ -21,17 +22,21 @@ app.register(fastifyJwt, {
 app.register(cookie);
 
 app.register(userRoutes, {
-  prefix: "user",
+  prefix: "api/",
 });
 
 app.register(mealRoutes, {
-  prefix: "/user/:idUser/meal",
+  prefix: "api/user/:idUser/meal",
 });
 
 app.register(metricsRouter, {
-  prefix: "/user/:userId/metrics",
+  prefix: "api/user/:userId/metrics",
 });
 
 app.register(email, {
-  prefix: "user/",
+  prefix: "api/",
+});
+
+app.register(redefinePassword, {
+  prefix: "api/",
 });

@@ -5,7 +5,7 @@ import { z } from "zod";
 import bcrypt from "bcrypt";
 
 export async function userRoutes(app: FastifyInstance) {
-  app.get("/", async () => {
+  app.get("user", async () => {
     const users = await knex("user").select();
 
     return {
@@ -13,7 +13,7 @@ export async function userRoutes(app: FastifyInstance) {
     };
   });
 
-  app.post("/register", async (req, res) => {
+  app.post("register", async (req, res) => {
     const createUserBodySchema = z.object({
       name: z.string(),
       lastname: z.string(),
@@ -39,7 +39,7 @@ export async function userRoutes(app: FastifyInstance) {
     return res.status(201).send({ id });
   });
 
-  app.post("/login", async (req, res) => {
+  app.post("login", async (req, res) => {
     const loginUserBodySchema = z.object({
       email: z.string(),
       password: z.string(),
