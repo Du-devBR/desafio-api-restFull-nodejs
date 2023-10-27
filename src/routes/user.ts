@@ -18,7 +18,7 @@ export async function userRoutes(app: FastifyInstance) {
       name: z.string(),
       lastname: z.string(),
       email: z.string(),
-      password: z.string(),
+      password: z.string().min(8),
     });
 
     const id = crypto.randomUUID();
@@ -26,17 +26,28 @@ export async function userRoutes(app: FastifyInstance) {
     const { name, lastname, email, password } = createUserBodySchema.parse(
       req.body,
     );
-    const hashPassword = await bcrypt.hash(password, 10);
 
-    await knex("user").insert({
-      id,
-      name,
-      lastname,
-      email,
-      hashPassword,
-    });
+    try {
+      const hashPassword = await bcrypt.hash(password, 10);
 
-    return res.status(201).send({ id });
+      const userHasRegitration = await knex("user")
+        .where("email", email)
+        .first();
+
+      if (userHasRegitration) {
+        return res.status(400).send({ message: "Email already exists" });
+      }
+      await knex("user").insert({
+        id,
+        name,
+        lastname,
+        email,
+        hashPassword,
+      });
+      return res.status(201).send({ id });
+    } catch (error) {
+      return res.status(404);
+    }
   });
 
   app.post("login", async (req, res) => {
@@ -51,7 +62,7 @@ export async function userRoutes(app: FastifyInstance) {
       const user = await knex("user").where({ email }).first();
 
       if (!user || !(await bcrypt.compare(password, user.hashPassword))) {
-        res.code(401).send({ error: "Credenciais inválidas." });
+        res.code(401).send({ error: "Invalid crfedentials for the user." });
         return;
       }
 
