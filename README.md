@@ -8,7 +8,7 @@
 
 ## Detalhes do aplicativo
 
-- Esta é uma api restfull para gerenciamento de refeições e controle de dieta de um usuario. É possivel o usuario se cadastrar na plataforma, registrar suas refeições, editar, deletar e ver os detalhes de cada refeição. É possivel o usuario visualizar suas métricas, com dados retornando sobre o total de refeições, as que estão dentro e fora da dieta e qual a maxima de refeições dentro da dieta.
+- Esta é uma api restfull para gerenciamento de refeições e controle de dieta de um usuario. É possivel o usuario se cadastrar na plataforma, realizar login e registrar suas refeições, editar, deletar e ver os detalhes de cada refeição. É possivel o usuario visualizar suas métricas, com dados retornando sobre o total de refeições, as que estão dentro e fora da dieta e qual a maxima de refeições dentro da dieta.
 
 ## 🚀 Funcionalidades
 
@@ -16,6 +16,7 @@
 
 ## Regras de negócio
 - [ x ] Deve ser possível criar um usuário
+- [ x ] Deve ser possível realizar login
 - [ x ] Deve ser possível identificar o usuário entre as requisições
 - [ x ] Deve ser possível registrar uma refeição feita, com as seguintes informações:
 
@@ -71,16 +72,28 @@ npm run dev
 ## Rotas:
 
 ### Usuario
-- `POST - /user`
+- `POST - /api/register`
 ```
 JSON
 {
 	"name": "john",
 	"lastname": "doe",
 	"email": "johndoe@teste.com"
+	"password: "password123"
+}
+```
+- `POST - /api/login`
+```
+JSON
+{
+	"email": "johndoe@teste.com"
+	"password: "password123"
 }
 ```
 ### Refeicoes
+
+Para todas as requisições após login, necessario adicionar o `Token` de autenticação Bearer que disponibilizado após o login.
+
 
 - `POST - /user/`*idUser*`/meal`
 ```
@@ -88,7 +101,7 @@ JSON
 {
 	"name": "teste",
 	"description": "teste1",
-    "createdAt": "2023-11-24T11:00:00.000-03",
+  "createdAt": "2023-11-24T11:00:00.000-03",
 	"isDiet": true
 }
 ```
