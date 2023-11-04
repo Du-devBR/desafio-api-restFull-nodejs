@@ -5,14 +5,6 @@ import { z } from "zod";
 import bcrypt from "bcrypt";
 
 export async function userRoutes(app: FastifyInstance) {
-  app.get("user", async () => {
-    const users = await knex("user").select();
-
-    return {
-      users,
-    };
-  });
-
   app.post("register", async (req, res) => {
     const createUserBodySchema = z.object({
       name: z.string(),
