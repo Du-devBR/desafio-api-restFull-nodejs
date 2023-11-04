@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "![GitHub repo size](https://img.shields.io/github/repo-size/Du-devBR/desafio-api-restFull-nodejs)\r ![GitHub language count](https://img.shields.io/github/languages/count/Du-devBR/desafio-api-restFull-nodejs)\r ![GitHub forks](https://img.shields.io/github/forks/Du-devBR/desafio-api-restFull-nodejs)",
   "main": "index.js",
+  "engines": {
+    "node": ">=18"
+  },
   "scripts": {
     "test": "vitest",
     "dev": "tsx watch src/server.ts",
@@ -24,7 +27,8 @@
     "tsup": "^7.2.0",
     "tsx": "^3.13.0",
     "typescript": "^5.2.2",
-    "vitest": "^0.34.6"
+    "vitest": "^0.34.6",
+    "sqlite3": "^5.1.6"
   },
   "dependencies": {
     "@fastify/cookie": "^9.1.0",
@@ -37,7 +41,7 @@
     "googleapis": "^128.0.0",
     "knex": "^2.5.1",
     "nodemailer": "^6.9.7",
-    "sqlite3": "^5.1.6",
+    "pg": "^8.11.3",
     "zod": "^3.22.3"
   }
 }
