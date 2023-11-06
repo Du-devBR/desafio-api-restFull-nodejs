@@ -13,36 +13,41 @@ export async function metricsRouter(app: FastifyInstance) {
       totalResgitered: z.number(),
       withinDiet: z.number(),
       offDiet: z.number(),
+      maxSequence: z.number(),
       percentMealsWithinDiet: z.number(),
     });
 
     try {
       const { userId } = getIdParamsSchema.parse(req.params);
+
       const result = await knex("meal")
-        .where("userId", userId)
-        .select(
-          knex.raw("COUNT(*) as totalResgitered"),
-          knex.raw("(COUNT(*) FILTER (WHERE isDiet = true)) as withinDiet"),
-          knex.raw("(COUNT(*) FILTER (WHERE isDiet = false)) as offDiet"),
-          knex.raw(
-            "COALESCE(ROUND((COUNT(*) FILTER (WHERE isDiet = true) * 100.0 / NULLIF(COUNT(*), 0)),2),0) as percentMealsWithinDiet",
-          ),
-        )
-        .orderBy("createdAt")
-        .first();
-
-      const { totalResgitered, offDiet, withinDiet, percentMealsWithinDiet } =
-        getMetricsSchrema.parse(result);
-
-      const meals = await knex("meal")
         .where("userId", userId)
         .orderBy("createdAt");
 
+      let totalResgitered = 0;
+      let withinDiet = 0;
+      let offDiet = 0;
+      let percentMealsWithinDiet = 0;
       let bestSequence = 0;
       let maxSequence = 0;
 
-      for (let i = 0; i < meals.length; i++) {
-        if (meals[i].isDiet) {
+      for (let i = 0; i < result.length; i++) {
+        totalResgitered++;
+        if (result[i].isDiet) {
+          withinDiet++;
+        } else {
+          offDiet++;
+        }
+      }
+
+      if (totalResgitered > 0) {
+        percentMealsWithinDiet = parseFloat(
+          ((withinDiet / totalResgitered) * 100).toFixed(2),
+        );
+      }
+
+      for (let i = 0; i < result.length; i++) {
+        if (result[i].isDiet) {
           bestSequence++;
           if (bestSequence > maxSequence) {
             maxSequence = bestSequence;
@@ -60,8 +65,10 @@ export async function metricsRouter(app: FastifyInstance) {
         maxSequence,
       };
 
+      const validateMetrics = getMetricsSchrema.parse(metrics);
+
       return {
-        metrics,
+        metrics: validateMetrics,
       };
     } catch (error) {
       return res.code(404).send({
